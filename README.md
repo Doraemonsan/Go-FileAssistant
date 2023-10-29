@@ -19,3 +19,4 @@
 ##### 删除接口请求办法:
 ##### Request Method:DELETE
 ##### /delete?file=%2Fyoufile.txt&auth=youauth
+[示例页面](https://files.gitlx.com)
