@@ -3,10 +3,10 @@
 
 ### 使用方法:
 1:源码运行
-go run gfa.go
-
+ go run gfa.go
+ 
 2：运行二进制文件
-./gfa
+ ./gfa
 
 当前支持:
 * -a 设置口令认证字符串(default NONE)
