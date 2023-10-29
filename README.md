@@ -18,9 +18,12 @@ go run gfa.go
 ***
 ### 上传接口请求方法：
 Request Method:POST
+
 /upload?dir=youdir&auth=youauth
+
 ### 删除接口请求办法:
 Request Method:DELETE
+
 /delete?file=%2Fyoufile.txt&auth=youauth
 
 [示例页面](https://files.gitlx.com)
