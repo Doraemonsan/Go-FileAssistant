@@ -1,6 +1,8 @@
 # Go-FileAssistant
 一个简单的Golang文件处理接口，用于处理NGINX搭建的简单静态HTTP文件服务器的文件操作
 
+[示例页面](https://files.gitlx.com)
+
 ### 使用方法:
 1:源码运行
 
@@ -25,5 +27,3 @@ Request Method:POST
 Request Method:DELETE
 
 /delete?file=%2Fyoufile.txt&auth=youauth
-
-[示例页面](https://files.gitlx.com)
