@@ -16,6 +16,7 @@ import (
 var logger *log.Logger
 var authToken string
 
+//处理上传文件请求逻辑
 func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	// 输出请求方法和其他信息到控制台
 	fmt.Printf("请求方法：%s\n", r.Method)
@@ -29,7 +30,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "401 Unauthorized, 口令验证失败，经授权的访问", http.StatusUnauthorized)
 		return
 	}
 
@@ -45,7 +46,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 			Time    string `json:"time"`
 		}{
 			IP:      r.RemoteAddr,
-			Message: "非法上传请求",
+			Message: "请求方法错误，非法上传请求",
 			Time:    currentTime,
 		}
 
@@ -104,6 +105,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	logger.Printf("文件上传成功，目标路径：%s\n", dstPath)
 }
 
+//处理删除请求逻辑
 func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	// 输出请求方法和其他信息到控制台
 	fmt.Printf("请求方法：%s\n", r.Method)
@@ -117,7 +119,7 @@ func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "401 Unauthorized, 口令验证失败，经授权的访问", http.StatusUnauthorized)
 		return
 	}
 
@@ -133,7 +135,7 @@ func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 			Time    string `json:"time"`
 		}{
 			IP:      r.RemoteAddr,
-			Message: "非法删除请求",
+			Message: "请求方法错误，非法删除请求",
 			Time:    currentTime,
 		}
 
@@ -203,6 +205,7 @@ func main() {
 	// 设置日志输出到控制台
 	logger.SetOutput(os.Stdout)
 
+	//口令验证变量以及处理逻辑
 	if *auth != "" {
 		match, _ := regexp.MatchString(`^[0-9a-zA-Z!@#$%^&*()_+\-=[\]{};':"|,.<>/?]{4,16}$`, *auth)
 		if !match {
@@ -216,12 +219,13 @@ func main() {
 	http.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 		uploadFile(w, r, *dir)
 	})
+	设置/delete路由的处理函数为deleteFile函数
 	http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
 		deleteFile(w, r, *dir)
 	})
 
 	// 启动服务器，监听指定的端口
-	fmt.Printf("服务器已启动，监听端口：%s\n", *port)
 	http.ListenAndServe(":"+*port, nil)
+	fmt.Printf("服务器已启动，监听端口：%s\n", *port)
 
 }
