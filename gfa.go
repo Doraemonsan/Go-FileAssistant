@@ -18,6 +18,7 @@ var authToken string
 
 //处理上传文件请求逻辑
 func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
+	
 	// 输出请求方法和其他信息到控制台
 	fmt.Printf("请求方法：%s\n", r.Method)
 	fmt.Printf("请求URL：%s\n", r.URL.String())
@@ -27,6 +28,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	auth := r.FormValue("auth")
 	logger.Printf("口令参数：%s\n", auth)
 
+	//口令验证逻辑
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
@@ -107,6 +109,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 
 //处理删除请求逻辑
 func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
+	
 	// 输出请求方法和其他信息到控制台
 	fmt.Printf("请求方法：%s\n", r.Method)
 	fmt.Printf("请求URL：%s\n", r.URL.String())
@@ -115,7 +118,8 @@ func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	// 获取口令参数
 	auth := r.FormValue("auth")
 	logger.Printf("口令参数：%s\n", auth)
-
+	
+	//口令验证逻辑
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
