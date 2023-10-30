@@ -16,7 +16,7 @@ import (
 var logger *log.Logger
 var authToken string
 
-//处理上传文件请求逻辑
+// 处理上传文件请求逻辑
 func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	
 	// 输出请求方法和其他信息到控制台
@@ -28,7 +28,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	auth := r.FormValue("auth")
 	logger.Printf("口令参数：%s\n", auth)
 
-	//口令验证逻辑
+	// 口令验证逻辑
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
@@ -107,7 +107,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	logger.Printf("文件上传成功，目标路径：%s\n", dstPath)
 }
 
-//处理删除请求逻辑
+// 处理删除请求逻辑
 func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	
 	// 输出请求方法和其他信息到控制台
@@ -119,7 +119,7 @@ func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 	auth := r.FormValue("auth")
 	logger.Printf("口令参数：%s\n", auth)
 	
-	//口令验证逻辑
+	// 口令验证逻辑
 	if auth != authToken {
 		// 口令认证失败，返回 401 错误代码
 		logger.Println("口令认证失败")
@@ -184,8 +184,8 @@ func deleteFile(w http.ResponseWriter, r *http.Request, dirPath string) {
 }
 
 func main() {
+	
 	// 解析命令行参数
-	// 通过命令行参数设置端口号，默认为8080
 	port := flag.String("p", "8080", "设置服务器监听的端口号")
 	logLevel := flag.String("log", "info", "设置日志输出级别")
 	auth := flag.String("a", "", "设置口令认证字符串")
@@ -209,7 +209,7 @@ func main() {
 	// 设置日志输出到控制台
 	logger.SetOutput(os.Stdout)
 
-	//口令验证变量以及处理逻辑
+	// 口令验证变量以及处理逻辑
 	if *auth != "" {
 		match, _ := regexp.MatchString(`^[0-9a-zA-Z!@#$%^&*()_+\-=[\]{};':"|,.<>/?]{4,16}$`, *auth)
 		if !match {
@@ -223,7 +223,7 @@ func main() {
 	http.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 		uploadFile(w, r, *dir)
 	})
-	设置/delete路由的处理函数为deleteFile函数
+	// 设置/delete路由的处理函数为deleteFile函数
 	http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
 		deleteFile(w, r, *dir)
 	})
